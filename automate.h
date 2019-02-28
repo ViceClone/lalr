@@ -4,17 +4,15 @@
 #include "lexer.h"
 using namespace std;
 
-
 class Automate {
     public:
-        Automate(String s);
-        void decaler(int etat);
-        void reduire(int regle);
-        void transition();
+        Automate() {}
+        ~Automate();
+        void lecture(string s);
+        void decalage(Symbole * s, Etat * e);
+        void reduction(int n, Symbole * s);
     protected:
-        deque<Symbole> symPile;
-        deque<int> etatPile;
-        Lexer l;
-        bool accepte;
-        bool error;
+        Lexer lex;
+        deque<Symbole*> symStack;
+        deque<Etat*> etatStack;
 }
