@@ -6,7 +6,7 @@ class Etat {
     public:
         Etat(string n) : name(n) {}
         virtual ~Etat() {}
-        void print() const;
+        virtual string toString();
         virtual bool transition(Automate & automate, Symbole * s) = 0;
     protected:
         string name;
@@ -17,6 +17,7 @@ class E0 : public Etat {
         E0(string n) : Etat(n) {}
         ~E0() {}
         bool transition(Automate & automate, Symbole * s);
+        string toString();
 }
 
 class E1 : public Etat {
@@ -24,6 +25,7 @@ class E1 : public Etat {
         E1(string n) : Etat(n) {}
         ~E1() {}
         bool transition(Automate & automate, Symbole * s);
+        string toString();
 }
 
 class E2 : public Etat {
@@ -31,6 +33,7 @@ class E2 : public Etat {
         E2(string n) : Etat(n) {}
         ~E2() {}
         bool transition(Automate & automate, Symbole * s);
+        string toString();
 }
 
 class E3 : public Etat {
@@ -38,6 +41,7 @@ class E3 : public Etat {
         E3(string n) : Etat(n) {}
         ~E3() {}
         bool transition(Automate & automate, Symbole * s);
+        string toString();
 }
 
 class E4 : public Etat {
@@ -45,6 +49,7 @@ class E4 : public Etat {
         E4(string n) : Etat(n) {}
         ~E4() {}
         bool transition(Automate & automate, Symbole * s);
+        string toString();
 }
 
 class E5 : public Etat {
@@ -52,6 +57,7 @@ class E5 : public Etat {
         E5(string n) : Etat(n) {}
         ~E5() {}
         bool transition(Automate & automate, Symbole * s);
+        string toString();
 }
 
 class E6 : public Etat {
@@ -59,6 +65,7 @@ class E6 : public Etat {
         E6(string n) : Etat(n) {}
         ~E6() {}
         bool transition(Automate & automate, Symbole * s);
+        string toString();
 }
 
 class E7 : public Etat {
@@ -66,6 +73,7 @@ class E7 : public Etat {
         E7(string n) : Etat(n) {}
         ~E7() {}
         bool transition(Automate & automate, Symbole * s);
+        string toString();
 }
 
 class E8 : public Etat {
@@ -73,6 +81,7 @@ class E8 : public Etat {
         E8(string n) : Etat(n) {}
         ~E8() {}
         bool transition(Automate & automate, Symbole * s);
+        string toString();
 }
 
 class E9 : public Etat {
@@ -80,4 +89,5 @@ class E9 : public Etat {
         E9(string n) : Etat(n) {}
         ~E9() {}
         bool transition(Automate & automate, Symbole * s);
+        string toString();
 }
