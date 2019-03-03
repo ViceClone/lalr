@@ -14,9 +14,9 @@ class Symbole {
       Symbole(int i) : ident(i) {  }
       virtual ~Symbole() { }
       operator int() const { return ident; }
-      bool isTerminal();
+      virtual bool isTerminal();
       virtual void Affiche();
-
+      virtual string toString();
    protected:
       int ident;
 };
@@ -27,6 +27,7 @@ class Entier : public Symbole {
       ~Entier() { }
       int getVal();
       virtual void Affiche();
+      virtual string toString();
    protected:
       int valeur;
 };
@@ -35,33 +36,46 @@ class Expr : public Symbole {
    public:
       Expr() : Symbole(EXPR){}
       virtual ~Expr() {}
+      bool isLeaf();
+      virtual string toString();
+   protected:
+      bool leaf = false;
 };
 
 class ExprBin : public Expr {
    public:
       ExprBin(Expr * e1, Expr* e2) : Expr(), expr1(e1), expr2(e2) {}
       virtual ~ExprBin() {}
+      bool isMult();
+      virtual string toString();
    protected:
       Expr * expr1;
       Expr * expr2;
+      bool mult;
 };
 
 class ExprMult : public ExprBin {
    public:
-      ExprMult(Expr * e1, Expr* e2) : ExprBin(e1,e2) {}
+      ExprMult(Expr * e1, Expr* e2) : ExprBin(e1,e2) {mult = true;}
       virtual ~ExprMult() {}
+      virtual string toString();
 };
 
 class ExprPlus : public ExprBin {
    public:
-      ExprPlus(Expr * e1, Expr* e2) : ExprBin(e1,e2) {}
+      ExprPlus(Expr * e1, Expr* e2) : ExprBin(e1,e2) {mult = false;}
       virtual ~ExprPlus() {}
+      virtual string toString();
 };
 
 class ExprEntier : public Expr {
    public:
-      ExprEntier(int n) : Expr(), val(n) {}
+      ExprEntier(int n) : Expr() {
+         leaf = true;
+         val = n;
+      }
       virtual ~ExprEntier() {}
+      virtual string toString();
    protected:
       int val;
 };

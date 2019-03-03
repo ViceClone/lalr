@@ -36,7 +36,9 @@ void Automate::reduction(int n, Symbole * s) {
 }
 
 Symbole * Automate::popSymbole() {
-    return (symStack.pop_back());
+    Symbole * s = symStack.back();
+    symStack.pop_back();
+    return s;
 }
 
 void Automate::popAndDestroySymbole() {
@@ -44,10 +46,26 @@ void Automate::popAndDestroySymbole() {
     symStack.pop_back();
 }
 
-void Automate::lecture(string s) {
-    lexer(s);
+void Automate::lecture(string str) {
+    lexer = new Lexer(str);
     bool stop = false;
     do {
-        stop = etatStack.back()->transition();
+        Symbole * s = lexer->Consulter();
+        stop = etatStack.back()->transition(*this, s);
     } while (!stop);
+}
+
+//TODO printStacks
+
+void Automate::printStacks() {
+    cout << "State Stack: ";
+    for (int i=0; i<etatStack.size(); i++) {
+        cout << etatStack[i]->toString() << "  ";
+    }
+    cout << endl;
+    cout << "Symbol Stack: ";
+    for (int i=0; i<symStack.size(); i++) {
+        cout << symStack[i]->toString() << "  ";
+    }
+    cout << endl;
 }
