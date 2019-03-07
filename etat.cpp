@@ -14,12 +14,12 @@ bool E0::transition(Automate & automate, Symbole * s) {
         case OPENPAR:
             automate.decalage(s, new E2);
             break;
-        case CLOSEPAR:
-        case PLUS:
-        case MULT:
-        case FIN:
         case EXPR:
             automate.decalage(s, new E1);
+            break;
+        default:
+            automate.setError(true);
+            return true;
             break;
         
     }
@@ -31,9 +31,6 @@ bool E0::transition(Automate & automate, Symbole * s) {
 
 bool E1::transition(Automate & automate, Symbole * s) {
     switch (*s) {
-        case INT:
-        case OPENPAR:
-        case CLOSEPAR:
         case PLUS:
             automate.decalage(s, new E4);
             break;
@@ -43,7 +40,9 @@ bool E1::transition(Automate & automate, Symbole * s) {
         case FIN:
             return true;
             break;
-        case EXPR:
+        default:
+            automate.setError(true);
+            return true;
             break;
     }
     #ifdef PRINT 
@@ -60,12 +59,12 @@ bool E2::transition(Automate & automate, Symbole * s) {
         case OPENPAR:
             automate.decalage(s, new E2);
             break;
-        case CLOSEPAR:
-        case PLUS:
-        case MULT:
-        case FIN:
         case EXPR:
             automate.decalage(s, new E6);
+            break;
+        default:
+            automate.setError(true);
+            return true;
             break;
     }
     #ifdef PRINT 
@@ -76,15 +75,16 @@ bool E2::transition(Automate & automate, Symbole * s) {
 
 bool E3::transition(Automate & automate, Symbole * s) {
     switch (*s) {
-        case INT:
-            break;
-        case OPENPAR:
-            break;
-        default:
+        case PLUS: case MULT: case CLOSEPAR: case FIN: {
             Symbole * s1 =  automate.popSymbole();
-            int value = ((Entier*)s1)->getVal();
+            int value = ((Entier*)s1)->getValue();
             delete s1;
             automate.reduction(1, new ExprEntier(value));
+        }
+            break;
+        default:
+            automate.setError(true);
+            return true;
             break;
     }
     #ifdef PRINT 
@@ -101,12 +101,12 @@ bool E4::transition(Automate & automate, Symbole * s) {
         case OPENPAR:
             automate.decalage(s,new E2);
             break;
-        case CLOSEPAR:
-        case PLUS:
-        case MULT:
-        case FIN:
         case EXPR:
             automate.decalage(s,new E7);
+            break;
+        default:
+            automate.setError(true);
+            return true;
             break;
     }
     #ifdef PRINT 
@@ -123,12 +123,12 @@ bool E5::transition(Automate & automate, Symbole * s) {
         case OPENPAR:
             automate.decalage(s,new E2);
             break;
-        case CLOSEPAR:
-        case PLUS:
-        case MULT:
-        case FIN:
         case EXPR:
             automate.decalage(s,new E8);
+            break;
+        default:
+            automate.setError(true);
+            return true;
             break;
     }
     #ifdef PRINT 
@@ -139,8 +139,6 @@ bool E5::transition(Automate & automate, Symbole * s) {
 
 bool E6::transition(Automate & automate, Symbole * s) {
     switch (*s) {
-        case INT:
-        case OPENPAR:
         case CLOSEPAR:
             automate.decalage(s,new E9);
             break;
@@ -150,8 +148,9 @@ bool E6::transition(Automate & automate, Symbole * s) {
         case MULT:
             automate.decalage(s,new E5);
             break;
-        case FIN:
-        case EXPR:
+        default:
+            automate.setError(true);
+            return true;
             break;
     }
     #ifdef PRINT 
@@ -163,20 +162,19 @@ bool E6::transition(Automate & automate, Symbole * s) {
 
 bool E7::transition(Automate & automate, Symbole * s) {
     switch (*s) {
-        case INT:
-            break;
-        case OPENPAR:
-            break;
         case MULT:
             automate.decalage(s, new E5);
             break;
-        case EXPR:
-            break;
-        default:
+        case PLUS: case CLOSEPAR: case FIN: {
             Expr* s1 = (Expr *) automate.popSymbole();
             automate.popAndDestroySymbole();
             Expr* s2 = (Expr *) automate.popSymbole();
             automate.reduction(3, new ExprPlus(s2,s1));
+        }
+            break;
+        default:
+            automate.setError(true);
+            return true;
             break;
     }
     #ifdef PRINT 
@@ -187,17 +185,16 @@ bool E7::transition(Automate & automate, Symbole * s) {
 
 bool E8::transition(Automate & automate, Symbole * s) {
     switch (*s) {
-        case INT:
-            break;
-        case OPENPAR:
-            break;
-        case EXPR:
-            break;
-        default:
+        case PLUS: case MULT: case CLOSEPAR: case FIN: {
             Expr * s1 = (Expr *) automate.popSymbole();
             automate.popAndDestroySymbole();
             Expr * s2 = (Expr *) automate.popSymbole();
             automate.reduction(3, new ExprMult(s2,s1));
+        }
+            break;
+        default:
+            automate.setError(true);
+            return true;
             break;
     }
     #ifdef PRINT 
@@ -208,17 +205,16 @@ bool E8::transition(Automate & automate, Symbole * s) {
 
 bool E9::transition(Automate & automate, Symbole * s) {
     switch (*s) {
-        case INT:
-            break;
-        case OPENPAR:
-            break;
-        case EXPR:
-            break;
-        default:
+        case PLUS: case MULT: case CLOSEPAR: case FIN: {
             automate.popAndDestroySymbole();
             Expr * s1 = (Expr *) automate.popSymbole();
             automate.popAndDestroySymbole();
             automate.reduction(3, s1);
+        }
+            break;
+        default:
+            automate.setError(true);
+            return true;
             break;
     }
     #ifdef PRINT 

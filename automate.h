@@ -17,8 +17,10 @@ class Automate {
         Symbole * popSymbole();
         void popAndDestroySymbole();
         void printStacks();
+        void setError(bool errVal);
     protected:
         Lexer * lexer;
         deque<Symbole*> symStack;
         deque<Etat*> etatStack;
+        bool error;
 };

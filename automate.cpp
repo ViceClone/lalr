@@ -5,6 +5,7 @@ using namespace std;
 
 Automate::Automate() {
     etatStack.push_back(new E0);
+    error = false;
 }
 
 Automate::~Automate() {
@@ -46,13 +47,25 @@ void Automate::popAndDestroySymbole() {
     symStack.pop_back();
 }
 
+void Automate::setError(bool errVal) {
+    error = errVal;
+}
+
 void Automate::lecture(string str) {
     lexer = new Lexer(str);
+    error = false;
     bool stop = false;
     do {
         Symbole * s = lexer->Consulter();
         stop = etatStack.back()->transition(*this, s);
     } while (!stop);
+
+    if (!error) {
+        cout << "Calc: " << symStack.back()->getValue() << endl;
+    } else {
+        cout << "An error occured." << endl;
+    }
+    
 }
 
 //TODO printStacks
@@ -68,4 +81,5 @@ void Automate::printStacks() {
         cout << symStack[i]->toString() << "  ";
     }
     cout << endl;
+    cout << "----------------" << endl;
 }

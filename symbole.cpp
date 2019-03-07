@@ -14,7 +14,7 @@ void Entier::Affiche() {
    cout<<"("<<valeur<<")";
 }
 
-int Entier::getVal() {
+int Entier::getValue() {
    return valeur;
 }
 
@@ -52,4 +52,28 @@ string ExprPlus::toString() {
 
 string ExprEntier::toString() {
    return "num:" +to_string(val);
+}
+
+int Symbole::getValue() {
+   return -1;
+}
+
+int Expr::getValue() {
+   return -1;
+}
+
+int ExprBin::getValue() {
+   return -1;
+}
+
+int ExprMult::getValue() {
+   return expr1->getValue()*expr2->getValue();
+}
+
+int ExprPlus::getValue() {
+   return expr1->getValue()+expr2->getValue();
+}
+
+int ExprEntier::getValue() {
+   return val;
 }

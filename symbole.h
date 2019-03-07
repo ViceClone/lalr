@@ -17,6 +17,7 @@ class Symbole {
       virtual bool isTerminal();
       virtual void Affiche();
       virtual string toString();
+      virtual int getValue();
    protected:
       int ident;
 };
@@ -25,7 +26,7 @@ class Entier : public Symbole {
    public:
       Entier(int v) : Symbole(INT), valeur(v) { }
       ~Entier() { }
-      int getVal();
+      virtual int getValue();
       virtual void Affiche();
       virtual string toString();
    protected:
@@ -38,6 +39,8 @@ class Expr : public Symbole {
       virtual ~Expr() {}
       bool isLeaf();
       virtual string toString();
+      virtual int getValue();
+      
    protected:
       bool leaf = false;
 };
@@ -48,6 +51,7 @@ class ExprBin : public Expr {
       virtual ~ExprBin() {}
       bool isMult();
       virtual string toString();
+      virtual int getValue();
    protected:
       Expr * expr1;
       Expr * expr2;
@@ -59,6 +63,7 @@ class ExprMult : public ExprBin {
       ExprMult(Expr * e1, Expr* e2) : ExprBin(e1,e2) {mult = true;}
       virtual ~ExprMult() {}
       virtual string toString();
+      virtual int getValue();
 };
 
 class ExprPlus : public ExprBin {
@@ -66,6 +71,7 @@ class ExprPlus : public ExprBin {
       ExprPlus(Expr * e1, Expr* e2) : ExprBin(e1,e2) {mult = false;}
       virtual ~ExprPlus() {}
       virtual string toString();
+      virtual int getValue();
 };
 
 class ExprEntier : public Expr {
@@ -76,6 +82,7 @@ class ExprEntier : public Expr {
       }
       virtual ~ExprEntier() {}
       virtual string toString();
+      virtual int getValue();
    protected:
       int val;
 };
