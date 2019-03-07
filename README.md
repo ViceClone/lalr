@@ -1,5 +1,6 @@
 # A Simple LALR Parser
 main.cpp contains the demo program for the lexer.
+
 main2.cpp contains the demo program for the parser.
 ## Build the project
 ### Lexer
