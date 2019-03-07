@@ -1,15 +1,27 @@
 # A Simple LALR Parser
 
 ## Build the project
+### Lexer
+```
+make lexer
+```
+### Parser
+```
+make parser
+```
+or simply
 ```
 make
 ```
-
 ## Run demo
+### Lexer
 ```
-./main
+./lexer
 ```
-
+### Parser
+```
+./parser
+```
 ## Clean
 ```
 make clean

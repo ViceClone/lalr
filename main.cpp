@@ -3,9 +3,11 @@
 
 
 int main(void) {
-   string chaine("(1+34)*123");
+   cout << "input string: ";
+   string str;
+   cin >> str;
 
-   Lexer l(chaine);
+   Lexer l(str);
 
    Symbole * s;
    while(*(s=l.Consulter())!=FIN) {

@@ -1,9 +1,14 @@
 CPP=g++
 FLAGS = -DPRINT -std=c++11
-SOURCE = automate.cpp etat.cpp lexer.cpp main2.cpp symbole.cpp
+SOURCE = automate.cpp etat.cpp lexer.cpp symbole.cpp
+PARSER = main2.cpp
+LEXER = main.cpp
 
-main: $(SOURCE)
-	$(CPP) -o main $(FLAGS) $(SOURCE)
+parser: $(SOURCE)
+	$(CPP) -o parser $(FLAGS) $(SOURCE) $(PARSER)
+
+lexer: $(SOURCE)
+	$(CPP) -o lexer $(FLAGS) $(SOURCE) $(LEXER)
 
 clean:
-	rm -f main
+	rm -f parser lexer
