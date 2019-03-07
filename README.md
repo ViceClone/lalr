@@ -1,4 +1,4 @@
-# lalr
+# A Simple LALR Parser
 
 ## Build the project
 ```
